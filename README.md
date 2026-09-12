@@ -101,6 +101,13 @@ viewport. Sin fade-up por sección, sin transiciones en cada card.
 qué métricas se mide el trabajo (CPL, CPA, ROAS, MER). Si en algún momento se agregan
 resultados reales, van en un bloque aparte, no reemplazando esta tabla.
 
+**Marca** — El galón ámbar de `.logo-mark` es la misma insignia del favicon, pero sin
+la placa. La placa existe en el favicon porque la barra del navegador es clara y el
+ícono necesita recortarse contra ella; dentro del sitio el fondo ya es carbón, así que
+la placa sobraría y metería un bloque de color que no responde a la regla del ámbar
+(acción y datos, nada más). Se define una sola vez en CSS como `background-image` con
+un SVG en data URI, y aplica al nav y al footer.
+
 **Accesibilidad** — `:focus-visible` con outline ámbar, `prefers-reduced-motion`
 respetado en scroll y animaciones, `aria-expanded` / `aria-label` en el hamburger,
 `scroll-margin-top` en todos los `[id]` para que el nav fijo no tape los anclajes.

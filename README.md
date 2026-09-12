@@ -145,6 +145,44 @@ la caída de una no arrastra a la otra. El fallback declarado es
 
 ---
 
+## Favicon
+
+Marca: dos galones oscuros sobre placa ámbar. Insignia militar y flecha ascendente
+a la vez, sin ser literal en ninguna de las dos. Fondo ámbar y no carbón porque en una
+barra de pestañas llena compite mejor una placa de color sólido.
+
+Todo se genera desde `favicon.svg` (viewBox `0 0 96 96`), así que las cinco versiones
+son geométricamente idénticas. Para regenerarlas tras cualquier cambio al SVG:
+
+```python
+import cairosvg
+from PIL import Image
+src = open('favicon.svg', 'rb').read()
+for name, s in {'apple-touch-icon.png': 180,
+                'android-chrome-192x192.png': 192,
+                'android-chrome-512x512.png': 512}.items():
+    cairosvg.svg2png(bytestring=src, write_to=name, output_width=s, output_height=s)
+cairosvg.svg2png(bytestring=src, write_to='_tmp.png', output_width=256, output_height=256)
+Image.open('_tmp.png').convert('RGBA').save('favicon.ico', sizes=[(16,16),(32,32),(48,48)])
+```
+
+| Archivo | Uso |
+|---|---|
+| `favicon.svg` | Chrome, Firefox, Edge modernos — vectorial |
+| `favicon.ico` | Safari y navegadores viejos — contiene 16, 32 y 48 |
+| `apple-touch-icon.png` | 180×180, pantalla de inicio en iOS |
+| `android-chrome-192x192.png` | Android, vía manifest |
+| `android-chrome-512x512.png` | Android splash, vía manifest |
+| `site.webmanifest` | Declara los dos PNG de Android |
+
+Los seis van en la raíz del repo. Vercel sirve la raíz como `/`, sin configuración extra.
+
+A 16px reales los dos galones quedan separados por un solo píxel y el espacio entre
+ellos se ensucia un poco. Es una decisión aceptada, no un bug: a 32px, que es lo que
+piden las pantallas retina, se ve limpio.
+
+---
+
 ## Acceso directo al repo
 
 Claude puede hacer commits directamente vía GitHub API con un token de acceso.
